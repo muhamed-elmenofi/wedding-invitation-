@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Abdelrahman & Rana — Save The Date</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cairo:wght@400;600;700&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pearl: { 50: '#ffffff', 100: '#fdfbf7', 200: '#f7f2ea', 300: '#ede4d8' },
+                        blush: { 100: '#fff0f3', 200: '#fce1e6', 300: '#f7cad0', 400: '#f4acb7', 500: '#e07a5f' },
+                        rose: { 500: '#d87093', 600: '#c2597f' },
+                        gold: { 100: '#fdf8e2', 300: '#f3dd91', 400: '#d4af37', 500: '#b8923a', 600: '#8c6b1f' },
+                        warmText: { 900: '#2b1e1a', 700: '#4a3832', 500: '#755c54' }
+                    },
+                    fontFamily: {
+                        script: ['"Alex Brush"', 'cursive'],
+                        serif: ['"Playfair Display"', 'serif'],
+                        garamond: ['"Cormorant Garamond"', 'serif'],
+                        cinzel: ['"Cinzel"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        arabic: ['"Cairo"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #fdfbf7 0%, #f5ebe0 50%, #f7f2ea 100%);
+            color: #2b1e1a;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .gold-shimmer-text {
+            background: linear-gradient(135deg, #b8923a 0%, #d4af37 40%, #8c6b1f 70%, #d87093 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .eq-bar {
+            width: 3px;
+            background: #d4af37;
+            border-radius: 2px;
+            animation: eqBounce 1.2s infinite ease-in-out alternate;
+        }
+        .eq-bar:nth-child(1) { height: 6px; animation-delay: 0.1s; }
+        .eq-bar:nth-child(2) { height: 16px; animation-delay: 0.3s; }
+        .eq-bar:nth-child(3) { height: 20px; animation-delay: 0.2s; }
+        .eq-bar:nth-child(4) { height: 10px; animation-delay: 0.4s; }
+        .playing .eq-bar { animation-play-state: running; }
+        .paused .eq-bar { animation-play-state: paused; height: 4px; }
+        @keyframes eqBounce {
+            0% { height: 4px; }
+            100% { height: 20px; }
+        }
+        .floating-flowers {
+            background-image: radial-gradient(rgba(244, 172, 183, 0.25) 1.5px, transparent 1.5px), radial-gradient(rgba(212, 175, 55, 0.2) 1.5px, transparent 1.5px);
+            background-position: 0 0, 16px 16px;
+            background-size: 32px 32px;
+        }
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.9s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .image-zoom-container { overflow: hidden; }
+        .image-zoom-container img { transition: transform 1.5s ease; }
+        .image-zoom-container:hover img, .is-visible .image-zoom-container img { transform: scale(1.05); }
+        .pulse-gentle { animation: pulseGentle 3s infinite; }
+        @keyframes pulseGentle {
+            0%, 100% { transform: scale(1); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+            50% { transform: scale(1.03); box-shadow: 0 10px 15px rgba(212, 175, 55, 0.2); }
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #fdfbf7; }
+        ::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 4px; }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-0 sm:p-4 relative selection:bg-blush-200 selection:text-warmText-900">
+
+    <div class="fixed inset-0 floating-flowers pointer-events-none z-0"></div>
+
+    <!-- ============================================================ -->
+    <!--  غيّل رابط الأغنية هنا فقط — سطر واحد!                       -->
+    <!--  لو هترفع على GitHub: اكتب اسم الملف بس                       -->
+    <!--  لو هتستخدم رابط: حط الرابط الكامل                           -->
+    <!-- ============================================================ -->
+    <audio id="bgAudio" loop playsinline preload="auto" muted>
+        <source src="videoplayback-1_TcgsfTFi_2.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Screen 1: Envelope -->
+    <div id="envelopeScreen" class="fixed inset-0 z-50 flex flex-col items-center justify-between bg-gradient-to-b from-pearl-100 via-blush-100 to-pearl-200 py-6 px-4 transition-all duration-700 overflow-y-auto">
+
+        <div class="flex items-center justify-center space-x-6 text-[11px] font-cinzel tracking-[0.25em] text-warmText-700 border-b border-gold-400/30 pb-3 w-full max-w-sm">
+            <span class="text-gold-600 font-bold border-b-2 border-gold-500 pb-1">ENVELOPE</span>
+            <span class="hover:text-gold-500 cursor-pointer transition open-envelope-trigger" onclick="openEnvelope()">SAVE THE DATE</span>
+        </div>
+
+        <div class="my-auto relative w-80 h-[420px] sm:w-88 sm:h-[450px] flex flex-col items-center justify-center cursor-pointer group open-envelope-trigger" onclick="openEnvelope()">
+
+            <div class="relative w-full h-full bg-white border-2 border-gold-400/40 rounded-3xl shadow-2xl overflow-hidden flex flex-col items-center justify-between p-6 transform transition duration-500 group-hover:scale-[1.01]">
+
+                <div class="absolute top-3 left-3 text-gold-400/50 text-xl"><i class="fa-solid fa-leaf"></i></div>
+                <div class="absolute top-3 right-3 text-gold-400/50 text-xl transform scale-x-[-1]"><i class="fa-solid fa-leaf"></i></div>
+
+                <div class="text-center pt-4">
+                    <div class="w-16 h-16 mx-auto mb-2 text-rose-500/80 text-3xl flex items-center justify-center bg-blush-100 rounded-full border border-blush-300 shadow-inner">
+                        <i class="fa-solid fa-spa text-gold-500"></i>
+                    </div>
+                    <p class="font-cinzel text-xs tracking-[0.3em] text-warmText-700 uppercase font-semibold">Wedding Invitation</p>
+                </div>
+
+                <div class="my-auto z-30 flex flex-col items-center pulse-gentle">
+                    <div class="w-20 h-20 bg-gradient-to-br from-gold-300 via-gold-400 to-rose-500 rounded-full flex items-center justify-center shadow-xl border-2 border-white transform transition duration-300">
+                        <div class="w-16 h-16 border border-white/80 rounded-full flex flex-col items-center justify-center text-white">
+                            <span class="font-cinzel text-lg font-bold tracking-tighter">AR</span>
+                            <i class="fa-solid fa-heart text-[10px] -mt-1 text-white"></i>
+                        </div>
+                    </div>
+                    <span class="font-cinzel text-[11px] tracking-[0.2em] text-gold-600 font-bold mt-4 uppercase group-hover:text-rose-600 transition">Open The Envelope</span>
+                </div>
+
+                <div class="pb-2 text-center">
+                    <p class="font-script text-3xl gold-shimmer-text">Abdelrahman & Rana</p>
+                    <p class="font-cinzel text-[11px] tracking-[0.25em] text-warmText-500 font-semibold mt-1">17 . 09 . 2026</p>
+                </div>
+            </div>
+        </div>
+
+        <button onclick="openEnvelope()" class="open-envelope-trigger py-3.5 px-8 rounded-full border border-gold-400 bg-white text-gold-600 font-cinzel text-xs font-bold tracking-[0.2em] uppercase hover:bg-gold-500 hover:text-white transition duration-300 shadow-lg pulse-gentle">
+            View Invitation
+        </button>
+    </div>
+
+    <!-- Screen 2: Main Invitation -->
+    <main id="mainInvitation" class="relative z-10 w-full max-w-md bg-pearl-100 sm:rounded-3xl shadow-2xl overflow-hidden border-2 border-gold-400/30 my-0 sm:my-4 hidden opacity-0 transition-opacity duration-1000">
+
+        <nav class="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-gold-400/30 px-6 py-3.5 flex items-center justify-between font-cinzel text-[10px] tracking-[0.2em] text-warmText-700 uppercase font-semibold shadow-sm">
+            <span class="text-gold-600 font-bold">INVITATION</span>
+            <div class="flex items-center space-x-4">
+                <a href="#details" class="hover:text-rose-500 transition">Date</a>
+                <a href="#location" class="hover:text-rose-500 transition">Location</a>
+                <a href="#rsvp" class="hover:text-rose-500 transition">RSVP</a>
+            </div>
+        </nav>
+
+        <section class="relative px-6 pt-10 pb-8 text-center bg-gradient-to-b from-white via-pearl-50 to-blush-100/30 border-b border-gold-400/20 reveal-on-scroll">
+
+            <div class="w-36 h-48 mx-auto mb-6 rounded-t-full rounded-b-full border-4 border-white shadow-xl image-zoom-container">
+                <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Wedding Flowers" class="w-full h-full object-cover">
+            </div>
+
+            <p class="font-script text-3xl text-rose-500 mb-1">We're getting married!</p>
+
+            <div class="my-6 space-y-1">
+                <h1 class="text-3xl sm:text-4xl font-serif tracking-wider gold-shimmer-text uppercase font-semibold">ABDELRAHMAN</h1>
+                <div class="flex items-center justify-center space-x-3 my-2">
+                    <span class="h-[1px] w-12 bg-gold-400/40"></span>
+                    <span class="font-script text-3xl text-rose-500">&</span>
+                    <span class="h-[1px] w-12 bg-gold-400/40"></span>
+                </div>
+                <h1 class="text-3xl sm:text-4xl font-serif tracking-wider gold-shimmer-text uppercase font-semibold">RANA</h1>
+            </div>
+
+            <div class="mt-6 pt-5 border-t border-gold-400/30 font-cinzel text-xs tracking-[0.25em] text-warmText-700 space-y-1.5 uppercase font-medium">
+                <p class="text-sm font-bold text-gold-600">17 . 09 . 2026</p>
+                <p class="text-[11px] text-warmText-500">7:00 PM</p>
+                <p class="text-xs text-rose-600 font-bold pt-1">BELLA HALL</p>
+            </div>
+        </section>
+
+        <section class="bg-white px-6 py-4 border-b border-gold-400/20 flex items-center justify-between shadow-sm reveal-on-scroll">
+            <div class="flex items-center space-x-4">
+                <button id="audioControlBtn" onclick="toggleAudio()" class="w-11 h-11 bg-gradient-to-br from-gold-400 to-rose-500 text-white rounded-full flex items-center justify-center hover:scale-105 transition shadow-md">
+                    <i id="audioIcon" class="fa-solid fa-play text-xs pl-0.5"></i>
+                </button>
+                <div>
+                    <p class="text-xs font-cinzel font-bold tracking-wider text-warmText-900">OUR SPECIAL SONG</p>
+                    <p class="text-[10px] text-warmText-500 font-sans mt-0.5">Tap to play / pause music</p>
+                </div>
+            </div>
+            <div id="equalizerContainer" class="flex items-end space-x-1 h-5 paused">
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+            </div>
+        </section>
+
+        <section id="details" class="py-10 px-6 text-center bg-pearl-50 border-b border-gold-400/20 reveal-on-scroll">
+            <p class="font-cinzel text-[11px] tracking-[0.3em] text-gold-600 uppercase font-bold mb-6">A Special Day Is Coming</p>
+
+            <div class="grid grid-cols-4 gap-2.5 max-w-xs mx-auto mb-8 font-cinzel">
+                <div class="bg-white border border-gold-400/30 p-3 rounded-2xl shadow-sm transform transition hover:-translate-y-1">
+                    <span id="count-days" class="block text-2xl font-bold text-rose-600">00</span>
+                    <span class="text-[9px] tracking-widest text-warmText-500 uppercase font-semibold">Days</span>
+                </div>
+                <div class="bg-white border border-gold-400/30 p-3 rounded-2xl shadow-sm transform transition hover:-translate-y-1">
+                    <span id="count-hours" class="block text-2xl font-bold text-rose-600">00</span>
+                    <span class="text-[9px] tracking-widest text-warmText-500 uppercase font-semibold">Hours</span>
+                </div>
+                <div class="bg-white border border-gold-400/30 p-3 rounded-2xl shadow-sm transform transition hover:-translate-y-1">
+                    <span id="count-minutes" class="block text-2xl font-bold text-rose-600">00</span>
+                    <span class="text-[9px] tracking-widest text-warmText-500 uppercase font-semibold">Mins</span>
+                </div>
+                <div class="bg-white border border-gold-400/30 p-3 rounded-2xl shadow-sm transform transition hover:-translate-y-1">
+                    <span id="count-seconds" class="block text-2xl font-bold text-rose-600">00</span>
+                    <span class="text-[9px] tracking-widest text-warmText-500 uppercase font-semibold">Secs</span>
+                </div>
+            </div>
+
+            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding+of+Abdelrahman+%26+Rana&dates=20260917T170000Z/20260917T220000Z&details=Wedding+Invitation+for+Abdelrahman+and+Rana+at+Bella+Hall&location=Bella+Hall,+Shebin+El-Kom" 
+               target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center space-x-2 px-6 py-3 rounded-full border border-gold-400 bg-white text-gold-600 font-cinzel text-[11px] font-bold tracking-[0.2em] uppercase hover:bg-gold-500 hover:text-white transition duration-300 shadow-md pulse-gentle">
+                <i class="fa-regular fa-calendar-plus text-xs"></i>
+                <span>Save To Google Calendar</span>
+            </a>
+        </section>
+
+        <section id="location" class="py-10 px-6 text-center bg-white border-b border-gold-400/20 reveal-on-scroll">
+            <p class="font-cinzel text-[11px] tracking-[0.3em] text-gold-600 uppercase font-bold mb-2">LOCATION & VENUE</p>
+            <h2 class="text-2xl font-serif text-warmText-900 uppercase tracking-wider font-semibold mb-4">BELLA HALL</h2>
+
+            <div class="w-full h-40 max-w-xs mx-auto mb-6 rounded-2xl border-2 border-white shadow-lg image-zoom-container">
+                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Elegant Wedding Hall" class="w-full h-full object-cover">
+            </div>
+
+            <p class="text-xs text-warmText-700 max-w-xs mx-auto mb-6 leading-relaxed font-arabic">
+                شبين الكوم ، أول طريق جنزور ، بعد كوبري فينيسيا<br/>
+                <span class="font-sans text-[11px] text-warmText-500">Shebin El-Kom, First Ganzour Road</span>
+            </p>
+
+            <div class="relative w-full max-w-xs mx-auto rounded-2xl border border-gold-400/40 bg-blush-100/40 p-5 shadow-sm group hover:shadow-md transition">
+                <div class="w-12 h-12 bg-white rounded-full border border-gold-400/40 flex items-center justify-center mx-auto mb-3 text-rose-500 text-lg shadow-sm">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <p class="font-cinzel text-[11px] tracking-[0.2em] text-warmText-700 font-bold uppercase mb-4">Tap Address For Directions</p>
+
+                <a href="https://maps.app.goo.gl/Kpn7favbATCuwYU36?g_st=iw" 
+                   target="_blank" rel="noopener noreferrer" 
+                   class="inline-flex items-center justify-center space-x-2 w-full py-3 bg-gradient-to-r from-gold-500 via-gold-400 to-rose-500 text-white font-cinzel text-xs font-bold tracking-widest uppercase rounded-xl shadow-md hover:brightness-105 transition duration-300">
+                    <i class="fa-solid fa-diamond-turn-right text-xs"></i>
+                    <span>Open In Google Maps</span>
+                </a>
+            </div>
+        </section>
+
+        <section id="rsvp" class="py-10 px-6 bg-pearl-100 relative reveal-on-scroll">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-serif text-gold-600 tracking-wider uppercase font-semibold mb-1">RSVP</h2>
+                <p class="font-cinzel text-xs tracking-[0.25em] text-warmText-500 font-medium">17 . 09 . 2026</p>
+            </div>
+
+            <form id="rsvpForm" onsubmit="handleRSVP(event)" class="space-y-5 bg-white p-6 rounded-2xl border border-gold-400/30 shadow-md max-w-xs mx-auto transition-all">
+
+                <div>
+                    <label class="block text-left text-warmText-700 font-cinzel text-[10px] font-bold tracking-[0.2em] uppercase mb-2">YOUR NAME *</label>
+                    <input type="text" id="guestName" required placeholder="Enter your name..." class="w-full px-4 py-3 rounded-xl bg-pearl-50 border border-gold-400/30 text-warmText-900 placeholder-warmText-500/40 text-xs focus:outline-none focus:border-gold-500 transition">
+                </div>
+
+                <div>
+                    <label class="block text-left text-warmText-700 font-cinzel text-[10px] font-bold tracking-[0.2em] uppercase mb-2">WILL YOU BE ATTENDING OUR WEDDING? *</label>
+                    <div class="space-y-2">
+                        <label class="flex items-center justify-between p-3 rounded-xl border border-gold-400/30 bg-pearl-50 cursor-pointer hover:border-gold-400 transition">
+                            <span class="text-xs text-warmText-900 font-cinzel tracking-wider uppercase font-semibold">JOYFULLY ACCEPTS</span>
+                            <input type="radio" name="attendance" value="Joyfully Accepts" checked class="accent-gold-500">
+                        </label>
+                        <label class="flex items-center justify-between p-3 rounded-xl border border-gold-400/30 bg-pearl-50 cursor-pointer hover:border-gold-400 transition">
+                            <span class="text-xs text-warmText-900 font-cinzel tracking-wider uppercase font-semibold">REGRETFULLY DECLINES</span>
+                            <input type="radio" name="attendance" value="Regretfully Declines" class="accent-gold-500">
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-left text-warmText-700 font-cinzel text-[10px] font-bold tracking-[0.2em] uppercase mb-2">DO YOU HAVE CHILDREN WITH YOU?</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <label class="flex items-center justify-center p-3 rounded-xl border border-gold-400/30 bg-pearl-50 cursor-pointer hover:border-gold-400 transition">
+                            <input type="radio" name="children" value="YES" class="accent-gold-500 mr-2">
+                            <span class="text-xs text-warmText-900 font-cinzel font-semibold">YES</span>
+                        </label>
+                        <label class="flex items-center justify-center p-3 rounded-xl border border-gold-400/30 bg-pearl-50 cursor-pointer hover:border-gold-400 transition">
+                            <input type="radio" name="children" value="NO" checked class="accent-gold-500 mr-2">
+                            <span class="text-xs text-warmText-900 font-cinzel font-semibold">NO</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-left text-warmText-700 font-cinzel text-[10px] font-bold tracking-[0.2em] uppercase mb-2">WRITE YOUR CONGRATULATION</label>
+                    <textarea id="guestMessage" rows="3" placeholder="Write your message to Abdelrahman & Rana..." class="w-full px-4 py-3 rounded-xl bg-pearl-50 border border-gold-400/30 text-warmText-900 placeholder-warmText-500/40 text-xs focus:outline-none focus:border-gold-500 transition resize-none"></textarea>
+                </div>
+
+                <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-gold-500 via-gold-400 to-rose-500 text-white font-cinzel text-xs font-bold tracking-[0.2em] uppercase rounded-xl shadow-md hover:brightness-105 transform hover:-translate-y-1 transition duration-300">
+                    SEND RSVP
+                </button>
+            </form>
+
+            <div id="rsvpSuccess" class="hidden mt-6 p-5 bg-white border border-gold-400/40 rounded-2xl max-w-xs mx-auto text-center shadow-md">
+                <i class="fa-solid fa-circle-check text-2xl text-rose-500 mb-2"></i>
+                <p class="font-cinzel text-xs font-bold text-warmText-900 uppercase tracking-widest">Response Saved!</p>
+                <p class="text-[11px] text-warmText-500 mt-1 mb-4">Thank you for sharing your response with us.</p>
+
+                <div class="space-y-2 text-left pt-2 border-t border-gold-400/20">
+                    <div class="flex justify-between text-[10px] font-cinzel font-bold text-gold-600">
+                        <span>JOYFULLY ACCEPTS</span>
+                        <span>100%</span>
+                    </div>
+                    <div class="w-full h-2 bg-pearl-200 rounded-full overflow-hidden">
+                        <div class="h-full bg-rose-500 w-full transition-all duration-1000"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="bg-white text-warmText-500 py-8 px-6 text-center font-cinzel text-[10px] tracking-[0.25em] uppercase border-t border-gold-400/20 space-y-1.5 reveal-on-scroll">
+            <p class="text-gold-600 font-bold">ABDELRAHMAN & RANA</p>
+            <p class="text-warmText-500">17 . 09 . 2026</p>
+            <p class="text-[9px] text-rose-500 font-bold pt-1 lowercase font-sans">We can't wait to celebrate together</p>
+        </footer>
+    </main>
+
+    <script>
+        // Scroll Animation Observer
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('is-visible');
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+        });
+
+        // Countdown
+        const weddingDate = new Date("2026-09-17T19:00:00").getTime();
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const diff = weddingDate - now;
+            if (diff > 0) {
+                document.getElementById("count-days").innerText = String(Math.floor(diff / (1000*60*60*24))).padStart(2,'0');
+                document.getElementById("count-hours").innerText = String(Math.floor((diff % (1000*60*60*24)) / (1000*60*60))).padStart(2,'0');
+                document.getElementById("count-minutes").innerText = String(Math.floor((diff % (1000*60*60)) / (1000*60))).padStart(2,'0');
+                document.getElementById("count-seconds").innerText = String(Math.floor((diff % (1000*60)) / 1000)).padStart(2,'0');
+            }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        const audio = document.getElementById('bgAudio');
+        const audioIcon = document.getElementById('audioIcon');
+        const equalizerContainer = document.getElementById('equalizerContainer');
+        let isPlaying = false;
+        let audioReady = false;
+
+        audio.addEventListener('canplaythrough', () => { audioReady = true; });
+        audio.addEventListener('loadedmetadata', () => { audioReady = true; });
+
+        function playAudioSecurely() {
+            audio.muted = false;
+            audio.volume = 1.0;
+            if (!audioReady) audio.load();
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    audioIcon.className = "fa-solid fa-pause text-xs";
+                    equalizerContainer.className = "flex items-end space-x-1 h-5 playing";
+                    isPlaying = true;
+                }).catch(e => {
+                    console.log("Audio play failed:", e);
+                    setTimeout(() => {
+                        audio.muted = false;
+                        audio.play().then(() => {
+                            audioIcon.className = "fa-solid fa-pause text-xs";
+                            equalizerContainer.className = "flex items-end space-x-1 h-5 playing";
+                            isPlaying = true;
+                        }).catch(err => console.log("Retry failed:", err));
+                    }, 100);
+                });
+            }
+        }
+
+        function toggleAudio() {
+            if (isPlaying) {
+                audio.pause();
+                audioIcon.className = "fa-solid fa-play text-xs pl-0.5";
+                equalizerContainer.className = "flex items-end space-x-1 h-5 paused";
+                isPlaying = false;
+            } else {
+                playAudioSecurely();
+            }
+        }
+
+        function openEnvelope() {
+            if (!isPlaying) playAudioSecurely();
+
+            const envelopeScreen = document.getElementById('envelopeScreen');
+            const mainInvitation = document.getElementById('mainInvitation');
+
+            envelopeScreen.style.opacity = '0';
+            setTimeout(() => {
+                envelopeScreen.classList.add('hidden');
+                mainInvitation.classList.remove('hidden');
+                setTimeout(() => {
+                    mainInvitation.style.opacity = '1';
+                    document.querySelectorAll('.reveal-on-scroll').forEach(el => {
+                        if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('is-visible');
+                    });
+                }, 50);
+                confetti({
+                    particleCount: 80, spread: 90, origin: { y: 0.6 },
+                    colors: ['#d4af37', '#f4acb7', '#fdf8e2', '#c2597f']
+                });
+            }, 600);
+        }
+
+        function handleRSVP(event) {
+            event.preventDefault();
+            const name = document.getElementById('guestName').value;
+            const attendance = document.querySelector('input[name="attendance"]:checked').value;
+            const children = document.querySelector('input[name="children"]:checked').value;
+            const message = document.getElementById('guestMessage').value;
+            localStorage.setItem('wedding_rsvp_' + Date.now(), JSON.stringify({ name, attendance, children, message, timestamp: new Date().toISOString() }));
+
+            const form = document.getElementById('rsvpForm');
+            const successBanner = document.getElementById('rsvpSuccess');
+            form.style.opacity = '0';
+            setTimeout(() => {
+                form.classList.add('hidden');
+                successBanner.classList.remove('hidden');
+                successBanner.classList.add('reveal-on-scroll', 'is-visible');
+                confetti({ particleCount: 120, spread: 100, origin: { y: 0.7 }, colors: ['#d4af37', '#e07a5f', '#f4acb7'] });
+            }, 300);
+        }
+    </script>
+</body>
+</html>
