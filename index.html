@@ -380,7 +380,6 @@
         function playAudioSecurely() {
             audio.muted = false;
             audio.volume = 1.0;
-            if (!audioReady) audio.load();
             const playPromise = audio.play();
             if (playPromise !== undefined) {
                 playPromise.then(() => {
