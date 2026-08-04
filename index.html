@@ -93,6 +93,9 @@
         ::-webkit-scrollbar-track { background: #fdfbf7; }
         ::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 4px; }
     </style>
+    <script>
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxVicdj4QvPsQBP-64uRQjGu5rk-W73bTlTmAxJupr8OAQBBjh7lzVwS0KFaWaqwCKM/exec";
+    </script>
 </head>
 <body class="min-h-screen flex items-center justify-center p-0 sm:p-4 relative selection:bg-blush-200 selection:text-warmText-900">
 
@@ -104,8 +107,9 @@
     <!--  لو هتستخدم رابط: حط الرابط الكامل                           -->
     <!-- ============================================================ -->
     <audio id="bgAudio" loop playsinline preload="auto" muted>
-<source src="videoplayback-1_TcgsfTFi.mp3" type="audio/mpeg">
-</audio>
+        <source src="videoplayback-1_TcgsfTFi_2.mp3" type="audio/mpeg">
+    </audio>
+
     <!-- Screen 1: Envelope -->
     <div id="envelopeScreen" class="fixed inset-0 z-50 flex flex-col items-center justify-between bg-gradient-to-b from-pearl-100 via-blush-100 to-pearl-200 py-6 px-4 transition-all duration-700 overflow-y-auto">
 
@@ -431,13 +435,34 @@
             }, 600);
         }
 
-        function handleRSVP(event) {
+        async function handleRSVP(event) {
             event.preventDefault();
+            const submitBtn = document.querySelector('#rsvpForm button[type="submit"]');
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = "Sending...";
+            submitBtn.disabled = true;
+
             const name = document.getElementById('guestName').value;
             const attendance = document.querySelector('input[name="attendance"]:checked').value;
             const children = document.querySelector('input[name="children"]:checked').value;
             const message = document.getElementById('guestMessage').value;
-            localStorage.setItem('wedding_rsvp_' + Date.now(), JSON.stringify({ name, attendance, children, message, timestamp: new Date().toISOString() }));
+
+            const data = { name, attendance, children, message };
+
+            // Send to Google Sheets
+            try {
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+            } catch (e) {
+                console.log("Sheet send (no-cors):", e);
+            }
+
+            // Local backup
+            localStorage.setItem('wedding_rsvp_' + Date.now(), JSON.stringify({ ...data, timestamp: new Date().toISOString() }));
 
             const form = document.getElementById('rsvpForm');
             const successBanner = document.getElementById('rsvpSuccess');
